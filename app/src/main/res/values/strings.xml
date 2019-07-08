@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_name">Marvel</string>
+    <string name="emptylist">Estamos salvando al mundo de su enésima posible destrucción, \nvolveremos pronto :D</string>
+    <string name="emptyDesc">No tenemos información de este superheroe. Es anónimo hasta para nosotros</string>
+    <string name="emptyName">Super héroe anónimo</string>
+
+    <string name="order_selected">La lista ya está ordenada</string>
+
+    <plurals name="days_last_modified">
+        <item quantity="one">Se modificó hace %1$s día</item>
+        <item quantity="other">Se modificó hace %1$s días</item>
+    </plurals>
+
+    <string name="menu_orderalphabet">Ordenar alfabeticamente</string>
+    <string name="menu_orderdate">Ordenar por fecha de modificación</string>
+</resources>
