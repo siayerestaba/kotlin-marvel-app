@@ -5,16 +5,9 @@
       tools:context="ui.MainActivity">
 
     <item
-            android:id="@+id/action_orderalphabet"
-            android:title="@string/menu_orderalphabet"
+            android:id="@+id/action_order"
+            android:title="@string/menu_order"
             android:icon="@mipmap/orderby_alphabet"
-            app:showAsAction="ifRoom"/>
-
-    <item
-            android:id="@+id/action_orderdate"
-            android:title="@string/menu_orderdate"
-            android:icon="@mipmap/orderby_date"
-            android:visible="false"
             app:showAsAction="ifRoom"/>
 
 </menu>

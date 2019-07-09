@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
     private val presenter: MainPresenter
     private lateinit var adapter: SuperheroesAdapter
 
+    private lateinit var menu: Menu
+
     init {
         val marvelRemoteApiSource = MarvelRemoteDataSource()
         val marvelLocalDataSource = MarvelLocalDataSource()
@@ -50,8 +52,6 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
 
         presenter.create()
 
-        val actionbar = supportActionBar
-
         initializeRecyclerView()
     }
 
@@ -67,24 +67,27 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        this.menu =  menu!!
+
+        presenter.calculateIconMenu()
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
-            R.id.action_orderalphabet -> {
-                val newIcon = presenter.getSuperheroesWithOrdenation()
-                item!!.setIcon(newIcon)
+            R.id.action_order -> {
+                presenter.getSuperheroesWithOrdenation()
             }
-
-//            R.id.action_orderdate -> {
-//                presenter.getSuperheroesWithOrdenation(Ordenation.MODIFIED)
-//            }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
+
+    override fun changeIconMenu(iconId: Int) {
+        menu.getItem(0).setIcon(iconId)
+    }
 
     override fun listSuperheroes(superheroes: List<Superheroe>) {
         adapter.addAll(superheroes)

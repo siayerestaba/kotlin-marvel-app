@@ -17,13 +17,15 @@ class MainPresenter(
     private val getOrdenation: GetOrdenation,
     private val saveOrdenation: SaveOrdenation
 ) {
-    private val limit: Int = 100 // TODO Parametrizar
+    private val limit: Int = 50 // TODO Parametrizar
     private var offset: Int = 0
     private lateinit var orderBy: Ordenation
 
     fun create() {
         view?.showLoading()
+
         getSavedOrdenation()
+
         renderSuperheroes()
     }
 
@@ -47,41 +49,35 @@ class MainPresenter(
         orderBy = getOrdenation()
     }
 
-//    fun getSuperheroesWithOrdenation(ordenation: Ordenation) {
-//        if (ordenation != orderBy) {
-//            view?.showLoading()
-//            view?.cleanSuperheroes()
-//
-//            orderBy = ordenation
-//            renderSuperheroes()
-//            saveNewOrdenation(ordenation)
-//        } else {
-//            view?.showToastMessage(R.string.order_selected)
-//        }
-//    }
-
-    fun getSuperheroesWithOrdenation(): Int {
-        var iconId: Int
-
+    fun getSuperheroesWithOrdenation() {
         view?.showLoading()
         view?.cleanSuperheroes()
 
         when (orderBy) {
             Ordenation.NAME -> {
                 orderBy = Ordenation.MODIFIED
-                iconId = R.mipmap.orderby_alphabet
             }
 
             Ordenation.MODIFIED -> {
                 orderBy = Ordenation.NAME
-                iconId = R.mipmap.orderby_date
             }
         }
 
+        calculateIconMenu()
         renderSuperheroes()
         saveNewOrdenation(orderBy)
+    }
 
-        return iconId
+    fun calculateIconMenu() {
+        when (orderBy) {
+            Ordenation.NAME -> {
+                view?.changeIconMenu(R.mipmap.orderby_alphabet)
+            }
+
+            Ordenation.MODIFIED -> {
+                view?.changeIconMenu(R.mipmap.orderby_date)
+            }
+        }
     }
 
     private fun saveNewOrdenation(ordenation: Ordenation) {
@@ -101,6 +97,8 @@ class MainPresenter(
         fun listSuperheroes(superheroes: List<Superheroe>)
         fun showSuperheroe(superheroe: Superheroe)
         fun cleanSuperheroes()
+
+        fun changeIconMenu(iconId: Int)
 
         fun showToastMessage(stringId: Int)
 

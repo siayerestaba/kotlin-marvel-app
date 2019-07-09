@@ -11,6 +11,5 @@
         <item quantity="other">Se modificó hace %1$s días</item>
     </plurals>
 
-    <string name="menu_orderalphabet">Ordenar alfabeticamente</string>
-    <string name="menu_orderdate">Ordenar por fecha de modificación</string>
+    <string name="menu_order">Ordenar</string>
 </resources>
