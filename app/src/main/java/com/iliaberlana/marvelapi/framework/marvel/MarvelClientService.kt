@@ -35,7 +35,7 @@ class MarvelClientService {
         marvelClient = retrofit.create(MarvelClient::class.java)
     }
 
-    fun getCharacters(offset: Int, limit: Int, orderBy: String): Call<CharacterDataWrapper> {
+    suspend fun getCharacters(offset: Int, limit: Int, orderBy: String): CharacterDataWrapper {
         val msa = getDataForMarvelServerAuthentication()
         return marvelClient.getCharacters(PUBLIC_KEY, limit, offset, timeStamp, msa, orderBy)
     }

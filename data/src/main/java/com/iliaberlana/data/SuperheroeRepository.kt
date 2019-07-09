@@ -7,13 +7,13 @@ class SuperheroeRepository (
     private val superheroeLocalDataSource: SuperheroeLocalDataSource
 )
 {
-    fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe> = superheroeRemoteDataSource.listSuperheroes(offset, limit, orderBy)
+    suspend fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe> = superheroeRemoteDataSource.listSuperheroes(offset, limit, orderBy)
 
     fun showSuperheroe(superheroe: Superheroe): Superheroe = superheroeLocalDataSource.getSuperheroe(superheroe)
 }
 
 interface SuperheroeRemoteDataSource {
-    fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe>
+    suspend fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe>
 }
 
 interface SuperheroeLocalDataSource {
