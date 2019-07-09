@@ -10,10 +10,5 @@ class OrdenationDataSource : OrdenationDataSource {
         MarvelApp.prefs.order = ordenation.typeOrdenation
     }
 
-    override fun getOrdenation() : Ordenation {
-        val orderSaved = MarvelApp.prefs.order
-        if(orderSaved.isNullOrEmpty()) return Ordenation.MODIFIED
-
-        return Ordenation.getOrdenationByType(orderSaved)
-    }
+    override fun getOrdenation() : Ordenation = Ordenation.getOrdenationByType(MarvelApp.prefs.order)
 }
