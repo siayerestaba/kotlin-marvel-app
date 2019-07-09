@@ -3,19 +3,14 @@ package com.iliaberlana.data
 import com.iliaberlana.domain.Superheroe
 
 class SuperheroeRepository (
-    private val superheroeRemoteDataSource: SuperheroeRemoteDataSource,
-    private val superheroeLocalDataSource: SuperheroeLocalDataSource
+    private val superheroeDataSource: SuperheroeDataSource
 )
 {
-    suspend fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe> = superheroeRemoteDataSource.listSuperheroes(offset, limit, orderBy)
-
-    fun showSuperheroe(superheroe: Superheroe): Superheroe = superheroeLocalDataSource.getSuperheroe(superheroe)
+    suspend fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe> = superheroeDataSource.listSuperheroes(offset, limit, orderBy)
+    fun showSuperheroe(superheroe: Superheroe): Superheroe = superheroeDataSource.getSuperheroe(superheroe)
 }
 
-interface SuperheroeRemoteDataSource {
+interface SuperheroeDataSource {
     suspend fun listSuperheroes(offset: Int, limit: Int, orderBy: String): List<Superheroe>
-}
-
-interface SuperheroeLocalDataSource {
     fun getSuperheroe(superheroe: Superheroe): Superheroe
 }

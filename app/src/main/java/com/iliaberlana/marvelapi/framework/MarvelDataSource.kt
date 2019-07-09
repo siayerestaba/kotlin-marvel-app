@@ -1,13 +1,13 @@
 package com.iliaberlana.marvelapi.framework
 
-import com.iliaberlana.data.SuperheroeRemoteDataSource
+import com.iliaberlana.data.SuperheroeDataSource
 import com.iliaberlana.domain.Superheroe
 import com.iliaberlana.marvelapi.framework.marvel.MarvelClientService
 import com.iliaberlana.marvelapi.framework.marvel.model.toSuperheroe
 import java.net.SocketTimeoutException
 import com.iliaberlana.marvelapi.framework.marvel.model.Character as MarvelCharacter
 
-class MarvelRemoteDataSource : SuperheroeRemoteDataSource {
+class MarvelDataSource : SuperheroeDataSource {
 
     private val marvelClientService: MarvelClientService = MarvelClientService()
 
@@ -22,4 +22,9 @@ class MarvelRemoteDataSource : SuperheroeRemoteDataSource {
 
         return emptyList()
     }
+
+    override fun getSuperheroe(superheroe: Superheroe): Superheroe {
+        return superheroe
+    }
+
 }

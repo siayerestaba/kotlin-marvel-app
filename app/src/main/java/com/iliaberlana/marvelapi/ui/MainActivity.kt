@@ -11,11 +11,9 @@ import android.view.View
 import android.widget.Toast
 import com.iliaberlana.data.OrdenationRepository
 import com.iliaberlana.data.SuperheroeRepository
-import com.iliaberlana.domain.Ordenation
 import com.iliaberlana.domain.Superheroe
 import com.iliaberlana.marvelapi.R
-import com.iliaberlana.marvelapi.framework.MarvelLocalDataSource
-import com.iliaberlana.marvelapi.framework.MarvelRemoteDataSource
+import com.iliaberlana.marvelapi.framework.MarvelDataSource
 import com.iliaberlana.marvelapi.framework.OrdenationDataSource
 import com.iliaberlana.marvelapi.ui.adapters.SuperheroesAdapter
 import com.iliaberlana.marvelapi.ui.presenters.MainPresenter
@@ -31,9 +29,8 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
     private lateinit var menu: Menu
 
     init {
-        val marvelRemoteApiSource = MarvelRemoteDataSource()
-        val marvelLocalDataSource = MarvelLocalDataSource()
-        val superheroeRepository = SuperheroeRepository(marvelRemoteApiSource, marvelLocalDataSource)
+        val marvelApiSource = MarvelDataSource()
+        val superheroeRepository = SuperheroeRepository(marvelApiSource)
 
         val ordenationDataSource = OrdenationDataSource()
         val ordenationRepository = OrdenationRepository(ordenationDataSource)

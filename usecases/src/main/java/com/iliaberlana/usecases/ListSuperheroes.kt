@@ -7,5 +7,5 @@ import com.iliaberlana.domain.Superheroe
 class ListSuperheroes (
     private val superheroeRepository: SuperheroeRepository)
 {
-    operator fun invoke(offset: Int, limit: Int, orderBy: String): List<Superheroe> = superheroeRepository.listSuperheroes(offset, limit, orderBy)
+     suspend operator fun invoke(offset: Int, limit: Int, orderBy: String): List<Superheroe> = superheroeRepository.listSuperheroes(offset, limit, orderBy)
 }
