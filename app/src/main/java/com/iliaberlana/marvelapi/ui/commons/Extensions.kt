@@ -13,7 +13,7 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View =
     LayoutInflater.from(context).inflate(layoutRes, this, false)
 
 fun ImageView.loadImage(path: String?) {
-    if (path.isNullOrEmpty()) {
+    if (!path.isNullOrEmpty()) {
         Glide.with(context)
             .load(path)
             .centerCrop()
