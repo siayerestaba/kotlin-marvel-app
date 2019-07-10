@@ -1,6 +1,7 @@
 package com.iliaberlana.marvelapi.ui.commons
 
 import android.support.annotation.LayoutRes
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,4 +20,8 @@ fun ImageView.loadImage(path: String?) {
             .override(SIZE_ORIGINAL)
             .into(this)
     }
+}
+
+fun String.logDebug(message: String) {
+    Log.d(this, message)
 }

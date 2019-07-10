@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
     }
 
     private fun initializeRecyclerView() {
-        adapter = SuperheroesAdapter(presenter)
+        adapter = SuperheroesAdapter(presenter, {presenter.getMoreSuperheroes()})
 
         val layoutManager = StaggeredGridLayoutManager(3, VERTICAL)
         layoutManager.gapStrategy = GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS

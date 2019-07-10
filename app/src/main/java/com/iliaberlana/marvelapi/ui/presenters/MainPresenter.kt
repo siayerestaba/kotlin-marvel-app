@@ -3,6 +3,7 @@ package com.iliaberlana.marvelapi.ui.presenters
 import com.iliaberlana.domain.Ordenation
 import com.iliaberlana.domain.Superheroe
 import com.iliaberlana.marvelapi.R
+import com.iliaberlana.marvelapi.ui.commons.logDebug
 import com.iliaberlana.usecases.GetOrdenation
 import com.iliaberlana.usecases.ListSuperheroes
 import com.iliaberlana.usecases.SaveOrdenation
@@ -17,7 +18,7 @@ class MainPresenter(
     private val getOrdenation: GetOrdenation,
     private val saveOrdenation: SaveOrdenation
 ) {
-    private val limit: Int = 50 // TODO Parametrizar
+    private val limit: Int = 50
     private var offset: Int = 0
     private lateinit var orderBy: Ordenation
 
@@ -35,7 +36,11 @@ class MainPresenter(
             view?.hideLoading()
 
             when {
-                superheroes.isEmpty() -> view?.showEmptyCase()
+                superheroes.isEmpty() -> {
+                    if(offset == 0) {
+                        view?.showEmptyCase()
+                    }
+                }
                 else -> {
                     view?.hideEmptyCase()
                     view?.listSuperheroes(superheroes)
@@ -53,6 +58,8 @@ class MainPresenter(
         view?.showLoading()
         view?.cleanSuperheroes()
 
+        offset = 0
+
         when (orderBy) {
             Ordenation.NAME -> {
                 orderBy = Ordenation.MODIFIED
@@ -66,6 +73,11 @@ class MainPresenter(
         calculateIconMenu()
         renderSuperheroes()
         saveNewOrdenation(orderBy)
+    }
+
+    fun getMoreSuperheroes() {
+        offset = offset.plus(limit)
+        renderSuperheroes()
     }
 
     fun calculateIconMenu() {
