@@ -16,6 +16,7 @@ import com.iliaberlana.marvelapi.R
 import com.iliaberlana.marvelapi.framework.MarvelDataSource
 import com.iliaberlana.marvelapi.framework.OrdenationDataSource
 import com.iliaberlana.marvelapi.ui.adapters.SuperheroesAdapter
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
 import com.iliaberlana.marvelapi.ui.presenters.MainPresenter
 import com.iliaberlana.usecases.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -86,8 +87,8 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
         menu.getItem(0).setIcon(iconId)
     }
 
-    override fun listSuperheroes(superheroes: List<Superheroe>) {
-        adapter.addAll(superheroes)
+    override fun listSuperheroes(marvelSuperHeroes: List<MarvelSuperHeroe>) {
+        adapter.addAll(marvelSuperHeroes)
     }
 
     override fun cleanSuperheroes() {
@@ -102,8 +103,8 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
         superheroe_text.visibility = View.GONE
     }
 
-    override fun showSuperheroe(superheroe: Superheroe) {
-        DetailActivity.open(activity = this, superHeroe = superheroe)
+    override fun showSuperheroe(marvelSuperHeroe: MarvelSuperHeroe) {
+        DetailActivity.open(activity = this, marvelSuperHeroe = marvelSuperHeroe)
     }
 
     override fun showToastMessage(stringId: Int) {

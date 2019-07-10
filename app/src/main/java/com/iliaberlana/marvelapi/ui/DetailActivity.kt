@@ -5,23 +5,20 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.iliaberlana.domain.Superheroe
 import com.iliaberlana.marvelapi.R
 import com.iliaberlana.marvelapi.ui.commons.loadImage
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
 import com.iliaberlana.marvelapi.ui.presenters.DetailPresenter
 import kotlinx.android.synthetic.main.activity_detail.*
-import org.joda.time.DateTime
-import org.joda.time.Days
-import org.joda.time.Interval
 
 class DetailActivity : AppCompatActivity(), DetailPresenter.ViewDetail {
 
     companion object {
         private const val SUPER_HEROE_KEY = "super_heroe_key"
 
-        fun open(activity: Activity, superHeroe: Superheroe) {
+        fun open(activity: Activity, marvelSuperHeroe: MarvelSuperHeroe) {
             val intent = Intent(activity, DetailActivity::class.java)
-            intent.putExtra(SUPER_HEROE_KEY, superHeroe)
+            intent.putExtra(SUPER_HEROE_KEY, marvelSuperHeroe)
             activity.startActivity(intent)
         }
     }
@@ -34,7 +31,7 @@ class DetailActivity : AppCompatActivity(), DetailPresenter.ViewDetail {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val superheroe = intent?.extras?.getSerializable(SUPER_HEROE_KEY) as? Superheroe
+        val superheroe = intent?.extras?.getSerializable(SUPER_HEROE_KEY) as? MarvelSuperHeroe
 
         presenter.create(superheroe!!)
         renderActionbar(superheroe.name)
@@ -54,15 +51,10 @@ class DetailActivity : AppCompatActivity(), DetailPresenter.ViewDetail {
         superheroes_progressbar.visibility = View.GONE
     }
 
-    override fun showSuperheroe(superheroe: Superheroe) {
-        superheroe_image.loadImage(superheroe.imageUrl)
-        superheroe_description.text = if (superheroe.description.isEmpty()) resources.getString(R.string.emptyDesc) else superheroe.description
-
-        val dt = DateTime(superheroe.daysFromLastModify)
-        val now = DateTime()
-
-        val interval = Days.daysBetween(dt.toLocalDate(), now.toLocalDate()).getDays()
-        superheroe_modified.text = resources.getQuantityString(R.plurals.days_last_modified, interval, "$interval")
+    override fun showSuperheroe( marvelSuperHeroe: MarvelSuperHeroe) { // TODO
+        superheroe_image.loadImage(marvelSuperHeroe.imageUrl)
+        superheroe_description.text = if (marvelSuperHeroe.description.isEmpty()) resources.getString(R.string.emptyDesc) else marvelSuperHeroe.description
+        superheroe_modified.text = resources.getQuantityString(R.plurals.days_last_modified, marvelSuperHeroe.daysFormLastModify, "${marvelSuperHeroe.daysFormLastModify}")
 
     }
 

@@ -1,19 +1,19 @@
 package com.iliaberlana.marvelapi.ui.presenters
 
-import com.iliaberlana.domain.Superheroe
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
 
 class DetailPresenter(
     private var view: ViewDetail?
 ) {
 
-    fun create(superheroe: Superheroe) {
+    fun create(marvelSuperHeroe: MarvelSuperHeroe) {
         view?.showLoading()
-        renderSuperheroe(superheroe)
+        renderSuperheroe(marvelSuperHeroe)
     }
 
-    private fun renderSuperheroe(superheroe: Superheroe) {
+    private fun renderSuperheroe(marvelSuperHeroe: MarvelSuperHeroe) {
         view?.hideLoading()
-        view?.showSuperheroe(superheroe)
+        view?.showSuperheroe(marvelSuperHeroe)
     }
 
     fun onDestroy() {
@@ -23,6 +23,6 @@ class DetailPresenter(
     interface ViewDetail {
         fun hideLoading()
         fun showLoading()
-        fun showSuperheroe(superheroe: Superheroe)
+        fun showSuperheroe(marvelSuperHeroe: MarvelSuperHeroe)
     }
 }
