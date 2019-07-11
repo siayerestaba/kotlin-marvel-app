@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.iliaberlana.marvelapi.R
 import com.iliaberlana.marvelapi.ui.commons.inflate
-import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperheroeForList
 import com.iliaberlana.marvelapi.ui.presenters.MainPresenter
 
 class SuperheroesAdapter(
@@ -15,9 +15,9 @@ class SuperheroesAdapter(
     private var distance: Int = 6
     private var waitingForNextPage: Boolean = false
 
-    private var marvelSuperheroes: MutableList<MarvelSuperHeroe> = ArrayList()
+    private var marvelSuperheroes: MutableList<MarvelSuperheroeForList> = ArrayList()
 
-    fun addAll(collection: Collection<MarvelSuperHeroe>) {
+    fun addAll(collection: Collection<MarvelSuperheroeForList>) {
         setWaitingForNextPageFalse()
         marvelSuperheroes.addAll(collection)
         notifyDataSetChanged()

@@ -10,13 +10,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.iliaberlana.data.OrdenationRepository
-import com.iliaberlana.data.SuperheroeRepository
-import com.iliaberlana.domain.Superheroe
 import com.iliaberlana.marvelapi.R
-import com.iliaberlana.marvelapi.framework.MarvelDataSource
+import com.iliaberlana.marvelapi.framework.MarvelRepository
 import com.iliaberlana.marvelapi.framework.OrdenationDataSource
+import com.iliaberlana.marvelapi.framework.marvel.MarvelClientService
 import com.iliaberlana.marvelapi.ui.adapters.SuperheroesAdapter
-import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperheroeForList
 import com.iliaberlana.marvelapi.ui.presenters.MainPresenter
 import com.iliaberlana.usecases.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,15 +29,15 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
     private lateinit var menu: Menu
 
     init {
-        val marvelApiSource = MarvelDataSource()
-        val superheroeRepository = SuperheroeRepository(marvelApiSource)
+        val marvelClientService = MarvelClientService()
+        val marvelRepository = MarvelRepository(marvelClientService)
 
         val ordenationDataSource = OrdenationDataSource()
         val ordenationRepository = OrdenationRepository(ordenationDataSource)
 
         presenter = MainPresenter(
             this,
-            ListSuperheroes(superheroeRepository),
+            ListSuperheroes(marvelRepository),
             GetOrdenation(ordenationRepository),
             SaveOrdenation(ordenationRepository)
         )
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
         menu.getItem(0).setIcon(iconId)
     }
 
-    override fun listSuperheroes(marvelSuperHeroes: List<MarvelSuperHeroe>) {
+    override fun listSuperheroes(marvelSuperHeroes: List<MarvelSuperheroeForList>) {
         adapter.addAll(marvelSuperHeroes)
     }
 
@@ -103,8 +102,8 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
         superheroe_text.visibility = View.GONE
     }
 
-    override fun showSuperheroe(marvelSuperHeroe: MarvelSuperHeroe) {
-        DetailActivity.open(activity = this, marvelSuperHeroe = marvelSuperHeroe)
+    override fun showSuperheroe(marvelSuperHeroeId: Int) {
+        DetailActivity.open(activity = this, marvelSuperHeroeId = marvelSuperHeroeId)
     }
 
     override fun showToastMessage(stringId: Int) {

@@ -2,8 +2,8 @@ package com.iliaberlana.marvelapi.ui.presenters
 
 import com.iliaberlana.domain.Ordenation
 import com.iliaberlana.marvelapi.R
-import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
-import com.iliaberlana.marvelapi.ui.model.toMarvelSuperheroe
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperheroeForList
+import com.iliaberlana.marvelapi.ui.model.toMarvelSuperheroeFromList
 import com.iliaberlana.usecases.GetOrdenation
 import com.iliaberlana.usecases.ListSuperheroes
 import com.iliaberlana.usecases.SaveOrdenation
@@ -44,7 +44,7 @@ class MainPresenter(
                 else -> {
                     view?.hideEmptyCase()
 
-                    val listMarvelSuperheroe = superheroes.map { it.toMarvelSuperheroe() }
+                    val listMarvelSuperheroe = superheroes.map { it.toMarvelSuperheroeFromList() }
                     view?.listSuperheroes(listMarvelSuperheroe)
                 }
             }
@@ -98,7 +98,7 @@ class MainPresenter(
         saveOrdenation(ordenation)
     }
 
-    fun onSuperHeroClicked(marvelSuperHeroe: MarvelSuperHeroe) = view?.showSuperheroe(marvelSuperHeroe)
+    fun onSuperHeroClicked(marvelSuperHeroeId: Int) = view?.showSuperheroe(marvelSuperHeroeId)
 
     fun onDestroy() {
         view = null
@@ -108,8 +108,8 @@ class MainPresenter(
         fun hideLoading()
         fun showLoading()
 
-        fun listSuperheroes(marvelSuperHeroes:  List<MarvelSuperHeroe>)
-        fun showSuperheroe(marvelSuperHeroe: MarvelSuperHeroe)
+        fun listSuperheroes(marvelSuperHeroes:  List<MarvelSuperheroeForList>)
+        fun showSuperheroe(marvelSuperHeroeId: Int)
         fun cleanSuperheroes()
 
         fun changeIconMenu(iconId: Int)

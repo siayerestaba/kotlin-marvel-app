@@ -1,19 +1,37 @@
 package com.iliaberlana.marvelapi.ui.presenters
 
-import com.iliaberlana.marvelapi.ui.model.MarvelSuperHeroe
+import com.iliaberlana.marvelapi.ui.model.MarvelSuperheroeForDetail
+import com.iliaberlana.marvelapi.ui.model.toMarvelSuperheroeFromDetail
+import com.iliaberlana.usecases.ShowSuperheroe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailPresenter(
-    private var view: ViewDetail?
+    private var view: ViewDetail?,
+    private val showSuperheroe: ShowSuperheroe
 ) {
 
-    fun create(marvelSuperHeroe: MarvelSuperHeroe) {
+    fun create(marvelSuperheroeId: Int) {
         view?.showLoading()
-        renderSuperheroe(marvelSuperHeroe)
+        renderSuperheroe(marvelSuperheroeId)
     }
 
-    private fun renderSuperheroe(marvelSuperHeroe: MarvelSuperHeroe) {
-        view?.hideLoading()
-        view?.showSuperheroe(marvelSuperHeroe)
+    private fun renderSuperheroe(marvelSuperheroeId: Int) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val superheroe = withContext(Dispatchers.IO) { showSuperheroe(marvelSuperheroeId) }
+            view?.hideLoading()
+
+            if (superheroe.id < 0) {
+                view?.showEmptyMessage()
+                view?.finishActivity()
+            } else {
+                val marvelSuperHeroe = superheroe.toMarvelSuperheroeFromDetail()
+                view?.updateActionBar(marvelSuperHeroe.name)
+                view?.showSuperheroe(marvelSuperHeroe)
+            }
+        }
     }
 
     fun onDestroy() {
@@ -23,6 +41,9 @@ class DetailPresenter(
     interface ViewDetail {
         fun hideLoading()
         fun showLoading()
-        fun showSuperheroe(marvelSuperHeroe: MarvelSuperHeroe)
+        fun showEmptyMessage()
+        fun finishActivity()
+        fun updateActionBar(marvelSuperheroeName: String)
+        fun showSuperheroe(marvelSuperHeroe: MarvelSuperheroeForDetail)
     }
 }
