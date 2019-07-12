@@ -85,11 +85,11 @@ class MainPresenter(
     fun calculateIconMenu() {
         when (orderBy) {
             Ordenation.NAME -> {
-                view?.changeIconMenu(R.mipmap.orderby_alphabet)
+                view?.changeIconMenu(R.mipmap.orderby_date)
             }
 
             Ordenation.MODIFIED -> {
-                view?.changeIconMenu(R.mipmap.orderby_date)
+                view?.changeIconMenu(R.mipmap.orderby_alphabet)
             }
         }
     }
