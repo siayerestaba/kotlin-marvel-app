@@ -33,13 +33,12 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
         val marvelRepository = MarvelRepository(marvelClientService)
 
         val ordenationDataSource = OrdenationDataSource()
-        val ordenationRepository = OrdenationRepository(ordenationDataSource)
 
         presenter = MainPresenter(
             this,
             ListSuperheroes(marvelRepository),
-            GetOrdenation(ordenationRepository),
-            SaveOrdenation(ordenationRepository)
+            GetOrdenation(ordenationDataSource),
+            SaveOrdenation(ordenationDataSource)
         )
     }
 
