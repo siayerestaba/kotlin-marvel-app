@@ -9,37 +9,24 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import com.iliaberlana.data.OrdenationRepository
 import com.iliaberlana.marvelapi.R
-import com.iliaberlana.marvelapi.framework.MarvelRepository
-import com.iliaberlana.marvelapi.framework.OrdenationDataSource
-import com.iliaberlana.marvelapi.framework.marvel.MarvelClientService
 import com.iliaberlana.marvelapi.ui.adapters.SuperheroesAdapter
 import com.iliaberlana.marvelapi.ui.model.MarvelSuperheroeForList
 import com.iliaberlana.marvelapi.ui.presenters.MainPresenter
-import com.iliaberlana.usecases.*
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.scope.currentScope
 
 
 class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
 
-    private val presenter: MainPresenter
+    private val presenter: MainPresenter by currentScope.inject()
     private lateinit var adapter: SuperheroesAdapter
 
     private lateinit var menu: Menu
 
-    init {
-        val marvelClientService = MarvelClientService()
-        val marvelRepository = MarvelRepository(marvelClientService)
-
-        val ordenationDataSource = OrdenationDataSource()
-
-        presenter = MainPresenter(
-            this,
-            ListSuperheroes(marvelRepository),
-            GetOrdenation(ordenationDataSource),
-            SaveOrdenation(ordenationDataSource)
-        )
+    override fun onResume() {
+        super.onResume()
+        presenter.view = this
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

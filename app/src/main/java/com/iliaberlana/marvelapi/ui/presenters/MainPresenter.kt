@@ -13,11 +13,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainPresenter(
-    private var view: ViewMain?,
     private val listSuperheroes: ListSuperheroes,
     private val getOrdenation: GetOrdenation,
     private val saveOrdenation: SaveOrdenation
 ) {
+
+    var view: ViewMain? = null
     private val limit: Int = 50
     private var offset: Int = 0
     private lateinit var orderBy: Ordenation
