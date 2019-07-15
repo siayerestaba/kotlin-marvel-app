@@ -36,13 +36,13 @@ class MarvelApp : Application() {
     }
 
     val appModule = module {
-        single<MarvelClientService> { MarvelClientService()}
+        single { MarvelClientService()}
         single<SuperheroeRepository> { MarvelRepository(get()) }
-        single<ListSuperheroes> { ListSuperheroes(get()) }
+        single { ListSuperheroes(get()) }
 
         single<OrdenationRepository> { OrdenationDataSource() }
-        single<GetOrdenation> { GetOrdenation(get()) }
-        single<SaveOrdenation> { SaveOrdenation(get()) }
+        single { GetOrdenation(get()) }
+        single { SaveOrdenation(get()) }
 
         scope(named<MainActivity>()) {
             scoped { MainPresenter(get(), get(), get()) }

@@ -8,7 +8,5 @@ data class Superheroe (
     val imageUrl : String
 )
 {
-    override fun toString(): String {
-        return "SUPERHEROE {ID: $id, Name: $name, Description: $description, ImageURL: $imageUrl, LastModify: $lastModify}"
-    }
+    override fun toString(): String = "SUPERHEROE {ID: $id, Name: $name, Description: $description, ImageURL: $imageUrl, LastModify: $lastModify}"
 }

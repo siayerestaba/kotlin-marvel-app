@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import com.iliaberlana.marvelapi.R
 import com.iliaberlana.marvelapi.ui.adapters.SuperheroesAdapter
+import com.iliaberlana.marvelapi.ui.commons.toast
 import com.iliaberlana.marvelapi.ui.model.MarvelSuperheroeForList
 import com.iliaberlana.marvelapi.ui.presenters.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity(), MainPresenter.ViewMain {
     }
 
     override fun showToastMessage(stringId: Int) {
-        Toast.makeText(this, stringId, Toast.LENGTH_LONG).show()
+        this.toast(this, resources.getString(stringId))
     }
 
     override fun showLoading() {
