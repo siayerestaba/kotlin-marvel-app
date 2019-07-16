@@ -35,7 +35,7 @@ class MarvelApp : Application() {
         }
     }
 
-    val appModule = module {
+    private val appModule = module {
         single { MarvelClientService()}
         single<SuperheroeRepository> { MarvelRepository(get()) }
         single { ListSuperheroes(get()) }
