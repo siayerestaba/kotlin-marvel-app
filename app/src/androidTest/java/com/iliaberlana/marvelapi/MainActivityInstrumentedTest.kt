@@ -2,9 +2,7 @@ package com.iliaberlana.marvelapi
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.iliaberlana.marvelapi.framework.MarvelRepository
 import com.iliaberlana.marvelapi.ui.MainActivity
@@ -15,17 +13,15 @@ import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.koin.core.context.loadKoinModules
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import org.koin.test.AutoCloseKoinTest
+import org.koin.test.KoinTest
 
-@RunWith(AndroidJUnit4::class)
-class MainActivityInstrumentedTest : AutoCloseKoinTest() {
+class MainActivityInstrumentedTest : KoinTest {
 
     @get:Rule
-    val activityRule = ActivityTestRule(MainActivity::class.java, false, false)
+    val activityRule = ActivityTestRule(MainActivity::class.java, true, false)
 
     val marvelRepository = mockk<MarvelRepository>()
     val listSuperheroes = ListSuperheroes(marvelRepository)
@@ -47,11 +43,20 @@ class MainActivityInstrumentedTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun showsEmptyCaseIfThereAreNoSuperHeroes() {
+    fun showsEmptyItemIfThereAreNoSuperHeroes() {
         coEvery { marvelRepository.listSuperheroes(0, 50, any()) } returns emptyList()
 
         activityRule.launchActivity(null)
 
         onView(withId(R.id.superheroe_text)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun showsEmptyTextIfThereAreNoSuperHeroes() {
+        coEvery { marvelRepository.listSuperheroes(0, 50, any()) } returns emptyList()
+
+        activityRule.launchActivity(null)
+
+        onView(withText(R.string.emptylist)).check(matches(isDisplayed()))
     }
 }
