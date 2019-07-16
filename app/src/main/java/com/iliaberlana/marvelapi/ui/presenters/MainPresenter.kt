@@ -7,16 +7,13 @@ import com.iliaberlana.marvelapi.ui.model.toMarvelSuperheroeFromList
 import com.iliaberlana.usecases.GetOrdenation
 import com.iliaberlana.usecases.ListSuperheroes
 import com.iliaberlana.usecases.SaveOrdenation
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MainPresenter(
     private val listSuperheroes: ListSuperheroes,
     private val getOrdenation: GetOrdenation,
     private val saveOrdenation: SaveOrdenation
-) {
+) : CoroutineScope by MainScope() {
 
     var view: ViewMain? = null
     private val limit: Int = 50
@@ -31,25 +28,44 @@ class MainPresenter(
         renderSuperheroes()
     }
 
-    private fun renderSuperheroes() {
-        GlobalScope.launch(Dispatchers.Main) {
-            val superheroes = withContext(Dispatchers.IO) { listSuperheroes(offset, limit, orderBy.typeOrdenation) }
-            view?.hideLoading()
+//    private fun renderSuperheroes() {
+//        GlobalScope.launch(Dispatchers.Main) {
+//            val superheroes = withContext(Dispatchers.IO) { listSuperheroes(offset, limit, orderBy.typeOrdenation) }
+//            view?.hideLoading()
+//
+//            when {
+//                superheroes.isEmpty() -> {
+//                    if(offset == 0) {
+//                        view?.showEmptyCase()
+//                    }
+//                }
+//                else -> {
+//                    view?.hideEmptyCase()
+//
+//                    val listMarvelSuperheroe = superheroes.map { it.toMarvelSuperheroeFromList() }
+//                    view?.listSuperheroes(listMarvelSuperheroe)
+//                }
+//            }
+//
+//        }
+//    }
 
-            when {
-                superheroes.isEmpty() -> {
-                    if(offset == 0) {
-                        view?.showEmptyCase()
-                    }
-                }
-                else -> {
-                    view?.hideEmptyCase()
+    private fun renderSuperheroes() = launch {
+        val superheroes = withContext(Dispatchers.IO) { listSuperheroes(offset, limit, orderBy.typeOrdenation) }
+        view?.hideLoading()
 
-                    val listMarvelSuperheroe = superheroes.map { it.toMarvelSuperheroeFromList() }
-                    view?.listSuperheroes(listMarvelSuperheroe)
+        when {
+            superheroes.isEmpty() -> {
+                if (offset == 0) {
+                    view?.showEmptyCase()
                 }
             }
+            else -> {
+                view?.hideEmptyCase()
 
+                val listMarvelSuperheroe = superheroes.map { it.toMarvelSuperheroeFromList() }
+                view?.listSuperheroes(listMarvelSuperheroe)
+            }
         }
     }
 
@@ -109,7 +125,7 @@ class MainPresenter(
         fun hideLoading()
         fun showLoading()
 
-        fun listSuperheroes(marvelSuperHeroes:  List<MarvelSuperheroeForList>)
+        fun listSuperheroes(marvelSuperHeroes: List<MarvelSuperheroeForList>)
         fun showSuperheroe(marvelSuperHeroeId: Int)
         fun cleanSuperheroes()
 
